@@ -1,40 +1,43 @@
-syntax = "proto3"
+syntax = "proto3";
 
-    package = services
+package services;
 
-service PaymentService{
+// Service for processing payments
+service PaymentService {
   rpc ProcessPayment(PaymentRequest) returns (PaymentResponse);
 }
 
-service TransactionService{
-  rpc GetTransactionHistory(TransactionRequest) returns (TransactionResponse);
+// Service for checking transaction history
+service TransactionService {
+  rpc GetTransactionHistory(TransactionRequest) returns (stream TransactionResponse);
 }
 
-service ChatService{
-  rpc Chat(stream ChatRequest) returns (stream ChatMessage);
+// Service for chatting with a customer service bot
+service ChatService {
+  rpc Chat(stream ChatMessage) returns (stream ChatMessage);
 }
 
-message PaymentRequest{
+message PaymentRequest {
   string user_id = 1;
   double amount = 2;
 }
 
-message PaymentResponse{
-  boolean success = 1;
+message PaymentResponse {
+  bool success = 1;
 }
 
-message TransactionRequest{
+message TransactionRequest {
   string user_id = 1;
 }
 
-message TransactionResponse{
+message TransactionResponse {
   string transaction_id = 1;
   string status = 2;
-  double amount =3;
+  double amount = 3;
   string timestamp = 4;
 }
 
-message ChatMessage{
+message ChatMessage {
   string user_id = 1;
   string message = 2;
 }
